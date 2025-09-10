@@ -77,35 +77,36 @@ Enable "Enable Futures" permission
 Restrict to your IP address for security  
 For testing, use Binance Testnet  
 
-##  🎯 Usage Examples
-Basic Market Orders  
-bash# Buy 0.001 BTC at market price  
-python src/cli.py market buy BTCUSDT 0.001  
+##  🎯 Usage Examples  
 
-Sell 0.001 BTC at market price  
-python src/cli.py market sell BTCUSDT 0.001  
-Limit Orders  
-bash# Place a buy limit order  
-python src/cli.py limit buy BTCUSDT 0.001 45000.00  
+### Basic Market Orders  
+python -m src.cli market buy BTCUSDT 0.002  
+python -m src.cli market sell ETHUSDT 0.1  
+python -m src.cli market buy ADAUSDT 1000.0  
+python -m src.cli market sell SOLUSDT 1.0  
 
-Place a sell limit order with IOC time-in-force  
-python src/cli.py limit sell BTCUSDT 0.001 50000.00 --tif IOC  
+### Limit Orders  
+python -m src.cli limit buy BTCUSDT 0.002 55000.0  
+python -m src.cli limit sell ETHUSDT 0.1 4000.0  
+python -m src.cli limit buy BTCUSDT 0.002 50000.0 --tif IOC  
+python -m src.cli limit buy BTCUSDT 0.002 52000.0 --tif FOK  
+python -m src.cli limit cancel BTCUSDT 12345  
 
-Cancel a limit order  
-python src/cli.py limit cancel BTCUSDT 123456789  
+## Advanced Orders  
+### OCO Orders (Take Profit + Stop Loss)  
+python -m src.cli advanced oco BTCUSDT BUY 0.002 70000.0 55000.0  
+python -m src.cli advanced oco ETHUSDT BUY 0.1 4500.0 3200.0  
+python -m src.cli advanced oco BTCUSDT SELL 0.002 55000.0 70000.0  
 
-Advanced Orders  
-OCO Orders (Take Profit + Stop Loss)  
-bash# Place OCO order with take profit at 50000 and stop loss at 40000  
-python src/cli.py advanced oco BTCUSDT BUY 0.001 50000.00 40000.00  
+### TWAP Orders  
+python -m src.cli advanced twap BTCUSDT BUY 0.01 30 --interval 60  
+python -m src.cli advanced twap ETHUSDT SELL 0.1 60 --interval 120  
+python -m src.cli advanced twap BTCUSDT BUY 0.002 5 --interval 30  
 
-TWAP Orders  
-bash# Execute 0.01 BTC over 60 minutes with 1-minute intervals  
-python src/cli.py advanced twap BTCUSDT BUY 0.01 60 --interval 60  
-
-Grid Trading  
-bash# Create grid orders between 40000-50000 with 5 levels, 0.001 per level  
-python src/cli.py advanced grid BTCUSDT 40000.00 50000.00 5 0.001  
+### Grid Trading  
+python -m src.cli advanced grid BTCUSDT 58000 62000 5 0.002  
+python -m src.cli advanced grid ETHUSDT 3000 4000 10 0.1  
+python -m src.cli advanced grid BTCUSDT 59000 61000 4 0.002  
 
 # 📊 Logging System
 The bot generates structured logs in the logs/ directory:
